@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Revisa tu carrito, ajusta cantidades y finaliza tu compra de manera segura.">
+    <meta name="theme-color" content="#804030">
+    <title>TuTienda | Carrito</title>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen page-cart">
+
+    <!-- ===== Header / Navbar ===== -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <noscript>
+            <div class="max-w-[1750px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <nav class="flex items-center justify-between">
+                    <a href="index.html" class="text-lg font-bold text-gray-900">TuTienda</a>
+                    <div class="flex items-center gap-4 text-sm font-medium">
+                        <a href="ofertas.html" class="text-gray-700 hover:text-emerald-600">Ofertas</a>
+                        <a href="carrito.html" class="text-gray-700 hover:text-emerald-600">Carrito</a>
+                        <a href="contacto.html" class="text-gray-700 hover:text-emerald-600">Contacto</a>
+                    </div>
+                </nav>
+            </div>
+        </noscript>
+        <!-- Contenido generado por js/layout.js -->
+    </header>
+
+    <main class="flex-grow">
+        <!-- ===== Hero Section (Carrito) ===== -->
+        <section class="hero-shell mb-12" data-variant="support">
+            <div class="max-w-[1750px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <span class="hero-kicker" data-i18n="cart_hero_badge">Compra segura</span>
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl hero-title">
+                            <span class="block xl:inline" data-i18n="cart_hero_title_1">Finaliza tu</span>
+                            <span class="block hero-title-accent xl:inline" data-i18n="cart_hero_title_2">Compra</span>
+                        </h1>
+                        <p class="mt-4 text-base sm:text-lg md:text-xl hero-subtitle" data-i18n="cart_hero_desc">
+                            Revisa tu selección y ajusta cantidades antes de pagar. Envíos rápidos y seguros.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#cart-summary" class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-transform hover:-translate-y-1" data-i18n="btn_view_summary">
+                                Ver resumen del pedido
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-media">
+                        <div class="hero-media-frame">
+                            <video class="hero-video" autoplay loop muted playsinline preload="metadata" aria-hidden="true" poster="images/30-625/poster.jpg">
+                                <source src="images/30-625/25051d730023481eb9ec2929fbcb007d.SD-480p.mp4" type="video/mp4">
+                                Tu navegador no soporta videos HTML5.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Contenido del Carrito ===== -->
+        <div class="max-w-[1750px] mx-auto py-16 px-4 sm:px-6 lg:px-8 w-full">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                
+                <!-- Columna de Items (con Scroll) -->
+                <div id="cart-items-container" class="lg:col-span-2 space-y-6 max-h-[500px] overflow-y-auto custom-scrollbar pr-2" aria-live="polite">
+                    <p class="text-center text-gray-600 py-10" role="status" data-i18n="loading_cart">Cargando carrito...</p>
+                    <!-- Los items del carrito se cargarán aquí... -->
+                    <!-- Mensaje de carrito vacío -->
+                    <div id="empty-cart-message" class="bg-white p-8 rounded-lg shadow text-center hidden">
+                        <p class="text-lg text-gray-600" data-i18n="cart_empty_msg">Tu carrito está vacío.</p>
+                        <a href="index.html" class="mt-4 inline-block text-indigo-600 hover:text-indigo-800 font-medium" data-i18n="btn_back_home">
+                            ← Volver a la tienda
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna de Resumen -->
+                <aside id="cart-summary" class="lg:col-span-1">
+                    <div class="bg-white p-6 rounded-lg shadow-lg sticky top-24">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="cart_summary_title">Resumen del pedido</h2>
+                        <div class="space-y-4">
+                            <div class="flex justify-between text-base text-gray-700">
+                                <span data-i18n="label_subtotal">Subtotal</span>
+                                <span id="cart-subtotal">$0</span>
+                            </div>
+                            <div class="flex justify-between text-base text-gray-700">
+                                <span data-i18n="label_shipping">Envío (Estimado)</span>
+                                <span id="cart-shipping">$0</span>
+                            </div>
+                            <div class="border-t border-gray-200 pt-4 mt-4 flex justify-between text-xl font-bold text-gray-900">
+                                <span data-i18n="label_total">Total</span>
+                                <span id="cart-total">$0</span>
+                            </div>
+                        </div>
+                        <button class="mt-8 w-full bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition-colors" data-i18n="btn_checkout">
+                            Finalizar compra
+                        </button>
+                        <button id="clear-cart-button" class="mt-4 w-full text-center text-sm text-gray-600 hover:text-red-600" data-i18n="btn_clear_cart">
+                            Vaciar carrito
+                        </button>
+                    </div>
+                </aside>
+
+            </div>
+
+            <!-- ===== Sección: Historial de Eliminados ===== -->
+            <section id="removed-items-section" class="mt-16 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900" data-i18n="section_removed">Eliminados recientemente</h2>
+                    <button id="clear-history-btn" class="text-sm text-red-600 hover:text-red-800 font-medium hover:underline" data-i18n="btn_clear_history">
+                        Borrar Historial
+                    </button>
+                </div>
+                <div id="removed-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Items eliminados se renderizarán aquí -->
+                </div>
+            </section>
+
+        </div>
+
+        <div class="cart-sticky-cta">
+            <a href="#cart-summary" class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg" data-i18n="btn_view_summary">
+                Ver resumen del pedido
+            </a>
+        </div>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="bg-white border-t border-gray-200">
+        <noscript>
+            <div class="max-w-[1750px] mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-gray-600 flex flex-col sm:flex-row gap-2 sm:justify-between">
+                <span>© 2026 TuTienda. Todos los derechos reservados.</span>
+                <div class="flex items-center gap-4">
+                    <a href="ofertas.html" class="hover:text-emerald-600">Ofertas</a>
+                    <a href="contacto.html" class="hover:text-emerald-600">Contacto</a>
+                </div>
+            </div>
+        </noscript>
+        <!-- Contenido generado por js/layout.js -->
+    </footer>
+
+
+    <!-- ===== Modal de Confirmación (Oculto por defecto) ===== -->
+    <div id="clear-cart-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop (Fondo oscuro) -->
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+            <!-- Truco para centrar el modal -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <!-- Panel del Modal -->
+            <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <!-- Icono de Advertencia -->
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title" data-i18n="modal_clear_c_title">¿Vaciar carrito de compras?</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-600" data-i18n="modal_clear_c_desc">
+                                    ¿Estás seguro de que deseas eliminar todos los productos de tu carrito? Esta acción no se puede deshacer.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="confirm-clear-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" data-i18n="modal_btn_yes_clear">
+                        Sí, Vaciar
+                    </button>
+                    <button type="button" id="cancel-clear-btn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" data-i18n="modal_btn_cancel">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Modal de Confirmación (Borrar Historial) ===== -->
+    <div id="clear-history-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-history-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-history-title" data-i18n="modal_clear_h_title">¿Borrar historial de eliminados?</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-600" data-i18n="modal_clear_h_desc">
+                                    ¿Estás segura de querer borrar el historial de eliminados? Esta acción no se puede deshacer.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="confirm-clear-history-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" data-i18n="modal_btn_yes_delete">
+                        Sí, Borrar
+                    </button>
+                    <button type="button" id="cancel-clear-history-btn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" data-i18n="modal_btn_cancel">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JavaScript ===== -->
+    <script type="module" src="js/app/init-cart.js"></script>
+</body>
+</html>
